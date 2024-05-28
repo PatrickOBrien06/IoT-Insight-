@@ -13,9 +13,8 @@
                 socket.emit('client_event', {data: 'Client connected'});
             });
 
-            socket.on('message', function(data) {
-                console.log('Message from server:', data);
-                document.getElementById('messages').innerHTML += '<p>' + data.data + '</p>';
+            socket.on('update_data', function(msg) {
+                document.getElementById('data').innerHTML = msg.data;
             });
         });
     </script>

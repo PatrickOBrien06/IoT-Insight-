@@ -1,29 +1,17 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Blueprint
 from flask_socketio import SocketIO, emit, send
-import logging
-import config
+import config as config
+from models import db, User, Sensor
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config.SECRET_KEY
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 socketio = SocketIO(app)
+
 
 @app.route('/')
 def index():
     return render_template("index.html")
-
-@socketio.on('connect')
-def handle_connect():
-    print('Client connected')
-
-@socketio.on('disconnect')
-def handle_disconnect():
-    print('Client disconnected')
-
-def send_data(data):
-    import time
-    while True:
-        time.sleep(5)
-        socketio.emit('update_data', data)
 
 @app.route("/data", methods=["POST"])
 def handle_data():
@@ -35,5 +23,24 @@ def handle_data():
     else:
         return jsonify({"status": "error", "message": "No data received"}), 400
 
+@app.route("/create_sensor", methods=["POST", "GET"])
+def create_sensor():
+    pass
+
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+def send_data(data):
+    while True:
+        socketio.emit('update_data', data)
+
+
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    with app.app_context():
+        db.create_all(app)

@@ -8,4 +8,4 @@ I decided to go for a more expandable design where users can authenicate their s
 - If True save the data from the HTTP into the SensorData table
 - If False just exit the root
 
-
+ 

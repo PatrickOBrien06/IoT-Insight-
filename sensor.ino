@@ -26,7 +26,7 @@
 //         http.begin(client, String(serverHost) + "/data"); // Specify the URL
 
 //         http.addHeader("Content-Type", "application/json"); // Specify content-type header
-//         String postData = "{\"data\":\"Sensor data or any other data\"}";
+//         String postData = "{\"data\":\"Sensor data or any other data\", \"id\":\"006\"}";
 
 //         int httpResponseCode = http.POST(postData); // Send the request
 

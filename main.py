@@ -48,6 +48,7 @@ def handle_data():
         return jsonify({"status": "success", "message": "data received"}), 200
     else:
         return jsonify({"status": "error", "message": "No data received"}), 400
+    
 
 
 @socketio.on('connect')
